@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: dealer-service
+          uri: lb://DEALER-SERVICE
+          predicates:
+            - Path=/dealers/**
+
+        - id: favourites-service
+          uri: lb://FAVOURITES
+          predicates:
+            - Path=/favorites/**
+
+        - id: reviews-service
+          uri: lb://REVIEWS-SERVICE
+          predicates:
+            - Path=/reviews/**
+
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customers/**
+
+        - id: vehicle-service
+          uri: lb://VEHICLE-SERVICE
+          predicates:
+            - Path=/vehicles/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
